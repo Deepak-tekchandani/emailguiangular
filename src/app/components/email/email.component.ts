@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EmailService } from 'src/app/service/email.service';
 
 @Component({
   selector: 'app-email',
@@ -13,7 +15,7 @@ export class EmailComponent implements OnInit {
     message:""
   }
 
-  constructor() { }
+  constructor(private email:EmailService,private snak:MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -22,5 +24,24 @@ export class EmailComponent implements OnInit {
     
     console.log("Data ",this.data)
     alert("Email Sent Successfully");
+
+    if(this.data.to=='' || this.data.subject == '' || this.data.message ==''){
+      this.snak.open("fields can not be empty !!","Ok")
+      return;
+
+    }
+
+    this.email.sendEmail(this.data).subscribe(
+      response=>{
+        console.log(response);
+        
+
+      },
+      error=>{
+        console.log(error);
+
+      }
+      
+    )
   }
 }
