@@ -12,6 +12,7 @@ export class EmailService {
 
   sendEmail(data:any){
     return this.http.post('${this.baseurl}/sendemail',data)
+    
       
   }
 }
